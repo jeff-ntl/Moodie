@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Moodie</string>
+    <string name="hint_diaryTitle">Enter Diary Title</string>
+    <string name="button_addDiary">Add Diary</string>
+</resources>
