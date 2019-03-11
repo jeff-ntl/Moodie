@@ -6,13 +6,12 @@ import android.example.com.moodie.models.DiaryModel
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.*
 import kotlinx.android.synthetic.main.activity_diary_list.*
-import kotlinx.android.synthetic.main.card_diary.view.*
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
 
-class DiaryListActivity : AppCompatActivity() {
+class DiaryListActivity : AppCompatActivity(), DiaryListener {
 
     lateinit var app: MainApp
 
@@ -27,7 +26,8 @@ class DiaryListActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         //?what data (in arraylist) to be used
         //recyclerView.adapter = DiaryAdapter(app.diaries)
-        recyclerView.adapter = DiaryAdapter(app.diaries.findAll())
+        //added this due to changed in DiaryAdapter (card click listener)
+        recyclerView.adapter = DiaryAdapter(app.diaries.findAll(),this)
 
         //tool bar / menu
         //??????????
@@ -48,5 +48,11 @@ class DiaryListActivity : AppCompatActivity() {
             R.id.item_add -> startActivityForResult<MainActivity>(0)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    //handle diary card clicked
+    override fun onDiaryClick(diary: DiaryModel) {
+        //diary data is put as extra
+        startActivityForResult(intentFor<MainActivity>().putExtra("diary_edit", diary), 0)
     }
 }
