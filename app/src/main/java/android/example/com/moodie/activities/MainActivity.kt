@@ -33,6 +33,13 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         //?tell which toolbar supports the onCreateOptionsMenu
         setSupportActionBar(toolbarAdd)
 
+        //to retrieve diary data when diary card is clicked
+        if (intent.hasExtra("diary_edit")) {
+            diary = intent.extras.getParcelable<DiaryModel>("diary_edit")
+            diaryTitle.setText(diary.title)
+            diaryDescription.setText(diary.description)
+        }
+
         btnAdd.setOnClickListener() {
             diary.title = diaryTitle.text.toString()
             diary.description = diaryDescription.text.toString()
@@ -41,6 +48,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 app.diaries.create(diary.copy())
                 //tell the previous activity that the operation is successful (this activity is opened)
                 setResult(AppCompatActivity.RESULT_OK)
+                finish()
              }
             else {
                 toast ("Please Enter a title")
