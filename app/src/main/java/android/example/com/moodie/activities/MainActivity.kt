@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     var diary = DiaryModel()
     lateinit var app: MainApp
 
+    //false = add diary, true = change diary
+    var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +37,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         //to retrieve diary data(from DiaryListActivity) when diary card is clicked
         if (intent.hasExtra("diary_edit")) {
+            edit = true
             diary = intent.extras.getParcelable<DiaryModel>("diary_edit")
             diaryTitle.setText(diary.title)
             diaryDescription.setText(diary.description)
+            btnAdd.setText(R.string.button_saveDiary)
         }
 
         //add button listener
@@ -45,14 +49,18 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             diary.title = diaryTitle.text.toString()
             diary.description = diaryDescription.text.toString()
             if (diary.title.isNotEmpty()) {
-                //app.diaries.add(diary.copy())
-                app.diaries.create(diary.copy())
+                if(edit){
+                    app.diaries.update(diary.copy())
+                }else{
+                    //app.diaries.add(diary.copy())
+                    app.diaries.create(diary.copy())
+                }
                 //tell the previous activity that the operation is successful (this activity is opened)
                 setResult(AppCompatActivity.RESULT_OK)
                 finish()
              }
             else {
-                toast ("Please Enter a title")
+                toast (getString(R.string.toast_message))
             }
         }
     }

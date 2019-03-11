@@ -1,5 +1,6 @@
 package android.example.com.moodie.activities
 
+import android.content.Intent
 import android.example.com.moodie.R
 import android.example.com.moodie.main.MainApp
 import android.example.com.moodie.models.DiaryModel
@@ -54,5 +55,12 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener {
     override fun onDiaryClick(diary: DiaryModel) {
         //diary data is put as extra ( to be deliver to MainActivity)
         startActivityForResult(intentFor<MainActivity>().putExtra("diary_edit", diary), 0)
+    }
+
+    //refresh diary on the view (card)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        //recyclerView is a widget in activity_placemark_list.xml
+        recyclerView.adapter?.notifyDataSetChanged()
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
