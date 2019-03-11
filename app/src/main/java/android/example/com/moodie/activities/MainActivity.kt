@@ -37,13 +37,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             diary.title = diaryTitle.text.toString()
             diary.description = diaryDescription.text.toString()
             if (diary.title.isNotEmpty()) {
-                app.diaries.add(diary.copy())
-                info("add Button Pressed: $diary")
-                app.diaries.forEach { info("add Button Pressed: ${it.title}") }
+                //app.diaries.add(diary.copy())
+                app.diaries.create(diary.copy())
                 //tell the previous activity that the operation is successful (this activity is opened)
                 setResult(AppCompatActivity.RESULT_OK)
-                finish()
-            }
+             }
             else {
                 toast ("Please Enter a title")
             }

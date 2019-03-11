@@ -26,7 +26,8 @@ class DiaryListActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         //?what data (in arraylist) to be used
-        recyclerView.adapter = DiaryAdapter(app.diaries)
+        //recyclerView.adapter = DiaryAdapter(app.diaries)
+        recyclerView.adapter = DiaryAdapter(app.diaries.findAll())
 
         //tool bar / menu
         //??????????
@@ -47,27 +48,5 @@ class DiaryListActivity : AppCompatActivity() {
             R.id.item_add -> startActivityForResult<MainActivity>(0)
         }
         return super.onOptionsItemSelected(item)
-    }
-}
-//?takes in a list, return recycleview adapter (to hold the data in the list)
-class DiaryAdapter constructor(private var diaries: List<DiaryModel>) : RecyclerView.Adapter<DiaryAdapter.MainHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        return MainHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_diary, parent, false))
-    }
-
-    override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val diary = diaries[holder.adapterPosition]
-        holder.bind(diary)
-    }
-
-    override fun getItemCount(): Int = diaries.size
-
-    class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        fun bind(diary: DiaryModel) {
-            itemView.diaryTitle.text = diary.title
-            itemView.diaryDescription.text = diary.description
-        }
     }
 }
