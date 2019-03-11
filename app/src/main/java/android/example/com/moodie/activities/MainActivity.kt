@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             diaryDescription.setText(diary.description)
         }
 
+        //add button listener
         btnAdd.setOnClickListener() {
             diary.title = diaryTitle.text.toString()
             diary.description = diaryDescription.text.toString()
