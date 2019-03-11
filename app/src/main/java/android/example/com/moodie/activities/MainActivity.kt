@@ -1,6 +1,10 @@
 package android.example.com.moodie.activities
 
+import android.content.Intent
 import android.example.com.moodie.R
+import android.example.com.moodie.helpers.readImage
+import android.example.com.moodie.helpers.readImageFromPath
+import android.example.com.moodie.helpers.showImagePicker
 import android.example.com.moodie.main.MainApp
 import android.example.com.moodie.models.DiaryModel
 import android.support.v7.app.AppCompatActivity
@@ -20,6 +24,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
     //false = add diary, true = change diary
     var edit = false
+
+    //used to tell that the image picker request is requested by MainActivity
+    val IMAGE_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +49,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             diaryTitle.setText(diary.title)
             diaryDescription.setText(diary.description)
             btnAdd.setText(R.string.button_saveDiary)
+            //read image added by user ( for editing image)
+            diaryImage.setImageBitmap(readImageFromPath(this, diary.image))
+
         }
 
         //add button listener
@@ -63,6 +73,12 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 toast (getString(R.string.toast_message))
             }
         }
+
+        //add image button listener
+        chooseImage.setOnClickListener {
+            info ("Select image")
+            showImagePicker(this,IMAGE_REQUEST)
+        }
     }
 
     //to load menu resource
@@ -79,5 +95,20 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    //recover diary image if the IMAGE_REQUEST(from clicking add image button) is seen
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            IMAGE_REQUEST -> {
+                if (data != null) {
+                    //to recover image data from image picker
+                    diary.image = data.getData().toString()
+                    //to display image(in MainActivty, when user picked the image)
+                    diaryImage.setImageBitmap(readImage(this,resultCode,data))
+                }
+            }
+        }
     }
 }
