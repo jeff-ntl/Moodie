@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         //?tell which toolbar supports the onCreateOptionsMenu
         setSupportActionBar(toolbarAdd)
 
-        //to retrieve diary data when diary card is clicked
+        //to retrieve diary data(from DiaryListActivity) when diary card is clicked
         if (intent.hasExtra("diary_edit")) {
             diary = intent.extras.getParcelable<DiaryModel>("diary_edit")
             diaryTitle.setText(diary.title)

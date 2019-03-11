@@ -14,6 +14,7 @@ interface DiaryListener {
 }
 
 //?takes in a list, return recycleview adapter (to hold the data in the list)
+//listener is the DiaryListActivitiy
 class DiaryAdapter constructor(private var diaries: List<DiaryModel>,  private val listener: DiaryListener) : RecyclerView.Adapter<DiaryAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -29,6 +30,7 @@ class DiaryAdapter constructor(private var diaries: List<DiaryModel>,  private v
 
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        //data displayed in each card
         fun bind(diary: DiaryModel, listener: DiaryListener) {
             itemView.diaryTitle.text = diary.title
             itemView.diaryDescription.text = diary.description

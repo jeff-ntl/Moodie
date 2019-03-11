@@ -52,7 +52,7 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener {
 
     //handle diary card clicked
     override fun onDiaryClick(diary: DiaryModel) {
-        //diary data is put as extra
+        //diary data is put as extra ( to be deliver to MainActivity)
         startActivityForResult(intentFor<MainActivity>().putExtra("diary_edit", diary), 0)
     }
 }
