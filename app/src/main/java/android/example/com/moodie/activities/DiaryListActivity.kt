@@ -59,7 +59,7 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener {
 
     //refresh diary on the view (card)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //recyclerView is a widget in activity_placemark_list.xml
+        //recyclerView is a widget in activity_diary_list.xml
         recyclerView.adapter?.notifyDataSetChanged()
         super.onActivityResult(requestCode, resultCode, data)
     }

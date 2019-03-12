@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             diaryTitle.setText(diary.title)
             diaryDescription.setText(diary.description)
             btnAdd.setText(R.string.button_saveDiary)
+            if(diary.image!=null){
+                chooseImage.setText(R.string.button_changeImage)
+            }
             //read image added by user ( for editing image)
             diaryImage.setImageBitmap(readImageFromPath(this, diary.image))
 
@@ -101,12 +104,14 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
+            //when an image is loaded
             IMAGE_REQUEST -> {
                 if (data != null) {
                     //to recover image data from image picker
                     diary.image = data.getData().toString()
                     //to display image(in MainActivty, when user picked the image)
                     diaryImage.setImageBitmap(readImage(this,resultCode,data))
+                    chooseImage.setText(R.string.button_changeImage)
                 }
             }
         }

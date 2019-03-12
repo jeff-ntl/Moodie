@@ -1,6 +1,7 @@
 package android.example.com.moodie.activities
 
 import android.example.com.moodie.R
+import android.example.com.moodie.helpers.readImageFromPath
 import android.example.com.moodie.models.DiaryModel
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -34,6 +35,7 @@ class DiaryAdapter constructor(private var diaries: List<DiaryModel>,  private v
         fun bind(diary: DiaryModel, listener: DiaryListener) {
             itemView.diaryTitle.text = diary.title
             itemView.diaryDescription.text = diary.description
+            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, diary.image))
             itemView.setOnClickListener { listener.onDiaryClick(diary) }
         }
     }

@@ -33,6 +33,7 @@ class DiaryMemStore: DiaryStore, AnkoLogger{
         if(foundDiary != null){
             foundDiary.title = diary.title;
             foundDiary.description = diary.description
+            foundDiary.image = diary.image
             logAll()
         }
     }
