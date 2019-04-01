@@ -15,6 +15,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class MainActivity : AppCompatActivity(), AnkoLogger {
 
@@ -27,6 +30,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
     //used to tell that the image picker request is requested by MainActivity
     val IMAGE_REQUEST = 1
+
+    //to get current date and time
+    val current = LocalDateTime.now()
+    val formatter = DateTimeFormatter.ofPattern("E, dd MMM yyyy")
+    val formatted = current.format(formatter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +54,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         if (intent.hasExtra("diary_edit")) {
             edit = true
             diary = intent.extras.getParcelable<DiaryModel>("diary_edit")
-            diaryTitle.setText(diary.title)
+            //diaryTitle.setText(diary.title)
             diaryDescription.setText(diary.description)
             btnAdd.setText(R.string.button_saveDiary)
             if(diary.image!=null){
@@ -59,9 +67,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         //add button listener
         btnAdd.setOnClickListener() {
-            diary.title = diaryTitle.text.toString()
+            diary.title = formatted
             diary.description = diaryDescription.text.toString()
-            if (diary.title.isNotEmpty()) {
+            if (diary.description.isNotEmpty()) {
                 if(edit){
                     app.diaries.update(diary.copy())
                 }else{
@@ -82,6 +90,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             info ("Select image")
             showImagePicker(this,IMAGE_REQUEST)
         }
+        info("Current Date is: $formatted")
+
     }
 
     //to load menu resource
