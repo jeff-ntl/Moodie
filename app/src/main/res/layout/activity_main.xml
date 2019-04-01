@@ -51,13 +51,15 @@
                         android:maxLines="5"
                         android:padding="8dp"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="14sp" android:textAlignment="viewStart"/>
+                        android:textSize="18sp"
+                        android:gravity="top|left"/>
 
                 <TextView
                         android:text="@string/textview_yourMood"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/yourMood"
-                        android:padding="8dp" android:textSize="24sp" android:layout_margin="8dp"/>
+                        android:padding="8dp" android:textSize="24sp" android:layout_margin="8dp"
+                        android:textColor="@color/colorPrimaryDark"/>
                 <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
