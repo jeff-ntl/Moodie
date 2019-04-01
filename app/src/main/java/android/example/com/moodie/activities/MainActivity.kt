@@ -17,7 +17,6 @@ import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 class MainActivity : AppCompatActivity(), AnkoLogger {
 
