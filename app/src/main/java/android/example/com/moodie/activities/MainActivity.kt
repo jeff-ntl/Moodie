@@ -96,12 +96,18 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     //to load menu resource
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_diary, menu)
+        //set the trash icon to be true if in edit mode and menu exists?
+        if (edit && menu != null) menu.getItem(0).setVisible(true)
         return super.onCreateOptionsMenu(menu)
     }
 
     //handle cancel button clicked
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
+            R.id.item_delete -> {
+                app.diaries.delete(diary)
+                finish()
+            }
             R.id.item_cancel -> {
                 finish()
             }
