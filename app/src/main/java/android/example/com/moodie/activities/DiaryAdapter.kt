@@ -34,8 +34,8 @@ class DiaryAdapter constructor(private var diaries: List<DiaryModel>,  private v
         //data displayed in each card
         fun bind(diary: DiaryModel, listener: DiaryListener) {
             itemView.diaryTitle.text = diary.title
-            itemView.diaryDescription.text = diary.description
-            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, diary.image))
+            //itemView.diaryDescription.text = diary.description
+            //itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, diary.image))
             itemView.setOnClickListener { listener.onDiaryClick(diary) }
         }
     }

@@ -10,4 +10,10 @@
     <string name="button_addImage">Add Image</string>
     <string name="select_diary_image">Select Diary Image</string>
     <string name="button_changeImage">Change Image</string>
+    <string name="smilingFaceDesc">smiling face</string>
+    <string name="neutralFaceDesc">neutral face</string>
+    <string name="sadFaceDesc">sad face</string>
+    <string name="angryFaceDesc">angryFace</string>
+    <string name="diaryImageDesc">diary image</string>
+    <string name="textview_yourMood">Your Mood:</string>
 </resources>
