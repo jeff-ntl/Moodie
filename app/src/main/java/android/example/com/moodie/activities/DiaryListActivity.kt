@@ -28,7 +28,8 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener {
         //?what data (in arraylist) to be used
         //recyclerView.adapter = DiaryAdapter(app.diaries)
         //added this due to changed in DiaryAdapter (card click listener)
-        recyclerView.adapter = DiaryAdapter(app.diaries.findAll(),this)
+        //recyclerView.adapter = DiaryAdapter(app.diaries.findAll(),this)
+        loadDiaries()
 
         //tool bar / menu
         //??????????
@@ -60,7 +61,19 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener {
     //refresh diary on the view (card)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         //recyclerView is a widget in activity_diary_list.xml
-        recyclerView.adapter?.notifyDataSetChanged()
+        //recyclerView.adapter?.notifyDataSetChanged()
+        loadDiaries()
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+    private fun loadDiaries(){
+        showDiaries(app.diaries.findAll())
+    }
+
+    fun showDiaries (diaries:List<DiaryModel>){
+        recyclerView.adapter = DiaryAdapter(diaries, this)
+        recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+
 }

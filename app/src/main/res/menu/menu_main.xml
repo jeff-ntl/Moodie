@@ -3,13 +3,13 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-            android:id="@+id/action_copy"
+            android:id="@+id/item_reminder"
             android:title="Reminder"
             android:icon="@drawable/ic_menu_alarm"
             app:showAsAction="always"
     />
     <item
-            android:id="@+id/action_paste"
+            android:id="@+id/item_pie"
             android:icon="@drawable/ic_menu_pie"
             android:title="Pie"
             app:showAsAction="always"
