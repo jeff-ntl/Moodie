@@ -16,4 +16,5 @@
     <string name="angryFaceDesc">angryFace</string>
     <string name="diaryImageDesc">diary image</string>
     <string name="textview_yourMood">Your Mood:</string>
+    <string name="menu_deleteDiary">Delete</string>
 </resources>

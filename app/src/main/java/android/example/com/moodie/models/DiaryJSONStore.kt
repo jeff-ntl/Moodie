@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import org.jetbrains.anko.AnkoLogger
 import android.example.com.moodie.helpers.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 /*
 * These are used in the implementations. These describe the filename,
@@ -46,7 +47,20 @@ class DiaryJSONStore : DiaryStore, AnkoLogger {
 
 
     override fun update(diary: DiaryModel) {
-        // todo
+        val diariesList = findAll() as ArrayList<DiaryModel>
+        var foundDiary: DiaryModel? = diariesList.find{ d -> d.id == diary.id}
+        if(foundDiary != null){
+            foundDiary.title = diary.title;
+            foundDiary.description = diary.description
+            foundDiary.image = diary.image
+            foundDiary.mood = diary.mood
+        }
+        serialize()
+    }
+
+    override fun delete(diary:DiaryModel){
+        diaries.remove(diary)
+        serialize()
     }
 
     private fun serialize() {

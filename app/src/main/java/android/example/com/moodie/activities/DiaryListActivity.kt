@@ -9,10 +9,12 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.activity_diary_list.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
 
-class DiaryListActivity : AppCompatActivity(), DiaryListener {
+class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
 
     lateinit var app: MainApp
 
@@ -56,6 +58,7 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener {
     override fun onDiaryClick(diary: DiaryModel) {
         //diary data is put as extra ( to be deliver to MainActivity)
         startActivityForResult(intentFor<MainActivity>().putExtra("diary_edit", diary), 0)
+        info(diary)
     }
 
     //refresh diary on the view (card)

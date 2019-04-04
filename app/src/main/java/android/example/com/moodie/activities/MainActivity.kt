@@ -9,8 +9,12 @@ import android.example.com.moodie.main.MainApp
 import android.example.com.moodie.models.DiaryModel
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.widget.ImageViewCompat
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -18,7 +22,10 @@ import org.jetbrains.anko.toast
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class MainActivity : AppCompatActivity(), AnkoLogger {
+
+
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+class MainActivity : AppCompatActivity(), AnkoLogger{
 
     //variables
     var diary = DiaryModel()
@@ -35,9 +42,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     val formatter = DateTimeFormatter.ofPattern("E, dd MMM yyyy")
     val formatted = current.format(formatter)
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(android.example.com.moodie.R.layout.activity_main)
         info("Main Activity started!")
 
         //create an instance of MainApp
@@ -55,9 +64,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             diary = intent.extras.getParcelable<DiaryModel>("diary_edit")
             //diaryTitle.setText(diary.title)
             diaryDescription.setText(diary.description)
-            btnAdd.setText(R.string.button_saveDiary)
+            btnAdd.setText(android.example.com.moodie.R.string.button_saveDiary)
             if(diary.image!=null){
-                chooseImage.setText(R.string.button_changeImage)
+                chooseImage.setText(android.example.com.moodie.R.string.button_changeImage)
             }
             //read image added by user ( for editing image)
             diaryImage.setImageBitmap(readImageFromPath(this, diary.image))
@@ -65,7 +74,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         }
 
         //add button listener
-        btnAdd.setOnClickListener() {
+        btnAdd.setOnClickListener {
             diary.title = formatted
             diary.description = diaryDescription.text.toString()
             if (diary.description.isNotEmpty()) {
@@ -80,7 +89,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 finish()
              }
             else {
-                toast (getString(R.string.toast_message))
+                toast (getString(android.example.com.moodie.R.string.toast_message))
             }
         }
 
@@ -91,24 +100,64 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         }
         info("Current Date is: $formatted")
 
+        //handle Smiling Face clicked
+        smilingFace.setOnClickListener{
+            Toast.makeText(this,"You have clicked smiling face!", Toast.LENGTH_SHORT).show()
+            smilingFace.imageAlpha = 123
+            neutralFace.imageAlpha = 255
+            sadFace.imageAlpha = 255
+            angryFace.imageAlpha = 255
+            diary.mood = "Smiling"
+        }
+
+        //handle Neutral Face clicked
+        neutralFace.setOnClickListener{
+            Toast.makeText(this,"You have clicked neutral face!", Toast.LENGTH_SHORT).show()
+            smilingFace.imageAlpha = 255
+            neutralFace.imageAlpha = 123
+            sadFace.imageAlpha = 255
+            angryFace.imageAlpha = 255
+            diary.mood = "Neutral"
+        }
+
+        //handle Sad Face clicked
+        sadFace.setOnClickListener{
+            Toast.makeText(this,"You have clicked sad face!", Toast.LENGTH_SHORT).show()
+            smilingFace.imageAlpha = 255
+            neutralFace.imageAlpha = 255
+            sadFace.imageAlpha = 123
+            angryFace.imageAlpha = 255
+            diary.mood = "Sad"
+        }
+
+        //handle Angry Face clicked
+        angryFace.setOnClickListener{
+            Toast.makeText(this,"You have clicked angry face!", Toast.LENGTH_SHORT).show()
+            smilingFace.imageAlpha = 255
+            neutralFace.imageAlpha = 255
+            sadFace.imageAlpha = 255
+            angryFace.imageAlpha = 123
+            diary.mood = "Angry"
+        }
     }
+
 
     //to load menu resource
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_diary, menu)
+        menuInflater.inflate(android.example.com.moodie.R.menu.menu_diary, menu)
         //set the trash icon to be true if in edit mode and menu exists?
-        if (edit && menu != null) menu.getItem(0).setVisible(true)
+        if (edit && menu != null) menu.getItem(0).isVisible = true
         return super.onCreateOptionsMenu(menu)
     }
 
     //handle cancel button clicked
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.item_delete -> {
+            android.example.com.moodie.R.id.item_delete -> {
                 app.diaries.delete(diary)
                 finish()
             }
-            R.id.item_cancel -> {
+            android.example.com.moodie.R.id.item_cancel -> {
                 finish()
             }
         }
@@ -123,12 +172,14 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             IMAGE_REQUEST -> {
                 if (data != null) {
                     //to recover image data from image picker
-                    diary.image = data.getData().toString()
+                    diary.image = data.data.toString()
                     //to display image(in MainActivty, when user picked the image)
                     diaryImage.setImageBitmap(readImage(this,resultCode,data))
-                    chooseImage.setText(R.string.button_changeImage)
+                    chooseImage.setText(android.example.com.moodie.R.string.button_changeImage)
                 }
             }
         }
     }
+
+
 }
