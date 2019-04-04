@@ -34,6 +34,15 @@ class DiaryAdapter constructor(private var diaries: List<DiaryModel>,  private v
         //data displayed in each card
         fun bind(diary: DiaryModel, listener: DiaryListener) {
             itemView.diaryTitle.text = diary.title
+            when(diary.mood){
+                "Smiling" -> itemView.moodIcon.setImageResource(R.drawable.smiling)
+                "Neutral" -> itemView.moodIcon.setImageResource(R.drawable.neutral)
+                "Sad" -> itemView.moodIcon.setImageResource(R.drawable.sad)
+                "Angry" -> itemView.moodIcon.setImageResource(R.drawable.angry)
+                else -> itemView.moodIcon.setImageResource(R.drawable.question)
+
+
+            }
             //itemView.diaryDescription.text = diary.description
             //itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, diary.image))
             itemView.setOnClickListener { listener.onDiaryClick(diary) }

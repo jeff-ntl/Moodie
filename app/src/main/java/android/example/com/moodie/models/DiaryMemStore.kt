@@ -38,6 +38,11 @@ class DiaryMemStore: DiaryStore, AnkoLogger{
         }
     }
 
+    //to delete
+    override fun delete(diary:DiaryModel){
+        diaries.remove(diary)
+    }
+
     fun logAll(){
         diaries.forEach{info("${it}")}
     }
