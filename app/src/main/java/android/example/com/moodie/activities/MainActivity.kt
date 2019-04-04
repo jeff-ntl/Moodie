@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.card_diary.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
@@ -71,6 +72,14 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
             //read image added by user ( for editing image)
             diaryImage.setImageBitmap(readImageFromPath(this, diary.image))
 
+            //set selected mood opacity to opaque when editing
+            when(diary.mood){
+                "Smiling" -> smilingFace.alpha = 1.0f
+                "Neutral" -> neutralFace.alpha = 1.0f
+                "Sad" -> sadFace.alpha = 1.0f
+                "Angry" -> angryFace.alpha = 1.0f
+            }
+
         }
 
         //add button listener
@@ -103,40 +112,40 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
         //handle Smiling Face clicked
         smilingFace.setOnClickListener{
             Toast.makeText(this,"You have clicked smiling face!", Toast.LENGTH_SHORT).show()
-            smilingFace.imageAlpha = 123
-            neutralFace.imageAlpha = 255
-            sadFace.imageAlpha = 255
-            angryFace.imageAlpha = 255
+            smilingFace.alpha = 1.0f
+            neutralFace.alpha= 0.5f
+            sadFace.alpha = 0.5f
+            angryFace.alpha = 0.5f
             diary.mood = "Smiling"
         }
 
         //handle Neutral Face clicked
         neutralFace.setOnClickListener{
             Toast.makeText(this,"You have clicked neutral face!", Toast.LENGTH_SHORT).show()
-            smilingFace.imageAlpha = 255
-            neutralFace.imageAlpha = 123
-            sadFace.imageAlpha = 255
-            angryFace.imageAlpha = 255
+            smilingFace.alpha = 0.5f
+            neutralFace.alpha= 1.0f
+            sadFace.alpha = 0.5f
+            angryFace.alpha = 0.5f
             diary.mood = "Neutral"
         }
 
         //handle Sad Face clicked
         sadFace.setOnClickListener{
             Toast.makeText(this,"You have clicked sad face!", Toast.LENGTH_SHORT).show()
-            smilingFace.imageAlpha = 255
-            neutralFace.imageAlpha = 255
-            sadFace.imageAlpha = 123
-            angryFace.imageAlpha = 255
+            smilingFace.alpha = 0.5f
+            neutralFace.alpha= 0.5f
+            sadFace.alpha = 1.0f
+            angryFace.alpha = 0.5f
             diary.mood = "Sad"
         }
 
         //handle Angry Face clicked
         angryFace.setOnClickListener{
             Toast.makeText(this,"You have clicked angry face!", Toast.LENGTH_SHORT).show()
-            smilingFace.imageAlpha = 255
-            neutralFace.imageAlpha = 255
-            sadFace.imageAlpha = 255
-            angryFace.imageAlpha = 123
+            smilingFace.alpha = 0.5f
+            neutralFace.alpha= 0.5f
+            sadFace.alpha = 0.5f
+            angryFace.alpha = 1.0f
             diary.mood = "Angry"
         }
     }

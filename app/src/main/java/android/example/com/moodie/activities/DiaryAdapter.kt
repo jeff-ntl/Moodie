@@ -40,8 +40,6 @@ class DiaryAdapter constructor(private var diaries: List<DiaryModel>,  private v
                 "Sad" -> itemView.moodIcon.setImageResource(R.drawable.sad)
                 "Angry" -> itemView.moodIcon.setImageResource(R.drawable.angry)
                 else -> itemView.moodIcon.setImageResource(R.drawable.question)
-
-
             }
             //itemView.diaryDescription.text = diary.description
             //itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, diary.image))
