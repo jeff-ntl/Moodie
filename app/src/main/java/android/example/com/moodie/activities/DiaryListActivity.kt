@@ -9,10 +9,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.activity_diary_list.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.*
 
 class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
 
@@ -50,7 +47,7 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
         when (item?.itemId) {
             //if the + icon is clicked, call MainActivity
             R.id.item_add -> startActivityForResult<MainActivity>(0)
-            R.id.item_pie -> startActivityForResult<PieActivity>(0)
+            R.id.item_pie -> startActivityForResult(intentFor<PieActivity>().putExtra("counter",1), 0)
         }
         return super.onOptionsItemSelected(item)
     }
