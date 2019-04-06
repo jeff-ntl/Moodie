@@ -50,6 +50,7 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
         when (item?.itemId) {
             //if the + icon is clicked, call MainActivity
             R.id.item_add -> startActivityForResult<MainActivity>(0)
+            R.id.item_pie -> startActivityForResult<PieActivity>(0)
         }
         return super.onOptionsItemSelected(item)
     }
