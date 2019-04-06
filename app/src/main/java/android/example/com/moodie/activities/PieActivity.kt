@@ -13,7 +13,15 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.formatter.PercentFormatter
 import android.R.attr.data
+import android.example.com.moodie.R
+import android.example.com.moodie.R.id.item_pie
+import android.example.com.moodie.R.id.item_pie_cancel
 import android.example.com.moodie.main.MainApp
+import android.os.Build.VERSION_CODES.P
+import android.view.Menu
+import android.view.MenuItem
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_pie.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
@@ -36,6 +44,10 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
 
         //create an instance of MainApp
         app = application as MainApp
+
+        toolbarPie.title = title
+        //?tell which toolbar supports the onCreateOptionsMenu
+        setSupportActionBar(toolbarPie)
 
         //loop through the arraylist and count mood
         var diaryArrayList = app.diaries.findAll()
@@ -73,7 +85,7 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
         yValues.add(PieEntry(neutralCounter, "Neutral"))
         yValues.add(PieEntry(angryCounter, "Angry"))
         yValues.add(PieEntry(smilingCounter, "Smiling"))
-        
+
         //description of PieChart
         var descr = Description()
         descr.text ="Your Mood in PieChart"
@@ -85,9 +97,11 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
 
         //set PieChart data
         val dataSet = PieDataSet(yValues,"")
+
         //the "boundary" between each data
         dataSet.sliceSpace = 3f
         dataSet.selectionShift = 5f
+
         //setting colors
         val colors = ArrayList<Int>()
 
@@ -95,10 +109,6 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
 
         for (c in ColorTemplate.JOYFUL_COLORS)
             colors.add(c)
-
-
-
-
 
         dataSet.colors = colors
 
@@ -109,4 +119,21 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
 
         pieChart.data = data
     }
+
+    //to load menu resource
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_pie, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    //handle cancel button clicked
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.example.com.moodie.R.id.item_pie_cancel  -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
