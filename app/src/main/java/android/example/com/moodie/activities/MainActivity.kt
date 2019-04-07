@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.card_diary.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.time.LocalDateTime
@@ -58,9 +59,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
     //to take photo
     val REQUEST_IMAGE_CAPTURE = 2
 
-
-    //to store photo
-    lateinit var currentPhotoPath: String
 
 
 
@@ -202,6 +200,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
     //recover diary image if the IMAGE_REQUEST(from clicking add image button) is seen
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        info("your image data is: $data")
         when (requestCode) {
             //when an image is loaded
             IMAGE_REQUEST -> {
@@ -216,6 +215,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
             //when a photo is taken
             REQUEST_IMAGE_CAPTURE ->{
                 if(data!=null && resultCode == Activity.RESULT_OK){
+                    //diary.image = data.toString()
+
                     val imageBitmap = data.extras.get("data") as Bitmap
                     diaryImage.setImageBitmap(imageBitmap)
 
@@ -225,7 +226,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
         }
 
     }
-
     //to take photo
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
@@ -234,6 +234,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
             }
         }
     }
+
+
+
 
 
 

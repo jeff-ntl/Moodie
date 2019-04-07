@@ -19,4 +19,6 @@
     <string name="menu_deleteDiary">Delete</string>
     <string name="moodDesc">Your Mood</string>
     <string name="button_takephoto">Take Photo</string>
+    <string name="welcomeDesc">Welcome Image</string>
+    <string name="welcomeText">Welcome to Moodie!</string>
 </resources>
