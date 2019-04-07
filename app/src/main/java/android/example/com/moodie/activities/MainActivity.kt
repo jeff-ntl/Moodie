@@ -9,11 +9,14 @@ import android.example.com.moodie.helpers.showImagePicker
 import android.example.com.moodie.main.MainApp
 import android.example.com.moodie.models.DiaryModel
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.Environment.DIRECTORY_PICTURES
+import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v4.widget.ImageViewCompat
@@ -226,6 +229,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
         }
 
     }
+
     //to take photo
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
@@ -234,7 +238,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
             }
         }
     }
-
 
 
 
