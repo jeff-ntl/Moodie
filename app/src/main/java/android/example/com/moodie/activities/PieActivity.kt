@@ -1,26 +1,18 @@
 package android.example.com.moodie.activities
 
+import android.example.com.moodie.R
+import android.example.com.moodie.main.MainApp
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.EventLogTags
-import com.github.mikephil.charting.animation.Easing
+import android.view.Menu
+import android.view.MenuItem
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
-import com.github.mikephil.charting.formatter.PercentFormatter
-import android.R.attr.data
-import android.example.com.moodie.R
-import android.example.com.moodie.R.id.item_pie
-import android.example.com.moodie.R.id.item_pie_cancel
-import android.example.com.moodie.main.MainApp
-import android.os.Build.VERSION_CODES.P
-import android.view.Menu
-import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pie.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -28,14 +20,14 @@ import org.jetbrains.anko.info
 
 class PieActivity : AppCompatActivity(), AnkoLogger {
 
-    lateinit var pieChart: PieChart
+    private lateinit var pieChart: PieChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(android.example.com.moodie.R.layout.activity_pie)
 
         //variable
-        lateinit var app: MainApp
+        val app: MainApp = application as MainApp
         //counter to be used for pieChart
         var smilingCounter = 0f
         var neutralCounter = 0f
@@ -43,14 +35,13 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
         var angryCounter = 0f
 
         //create an instance of MainApp
-        app = application as MainApp
 
         toolbarPie.title = title
         //?tell which toolbar supports the onCreateOptionsMenu
         setSupportActionBar(toolbarPie)
 
         //loop through the arraylist and count mood
-        var diaryArrayList = app.diaries.findAll()
+        val diaryArrayList = app.diaries.findAll()
         for(item in diaryArrayList){
             when(item.mood){
                 "Smiling" -> smilingCounter++
@@ -63,7 +54,7 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
         info("Smiling: $smilingCounter, Neutral: $neutralCounter, Sad: $sadCounter, Angry: $angryCounter")
 
         //refer to piechart from your layout
-        pieChart = findViewById(android.example.com.moodie.R.id.piechart)
+        pieChart = this.findViewById(android.example.com.moodie.R.id.piechart)
 
         //add y-values in percentage
         //pieChart.setUsePercentValues(true)
@@ -87,8 +78,9 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
         yValues.add(PieEntry(smilingCounter, "Smiling"))
 
         //description of PieChart
-        var descr = Description()
+        val descr = Description()
         descr.text ="Your Mood in PieChart"
+        descr.textColor = R.color.colorAccent
         descr.textSize = 36f
         pieChart.description = descr
 
