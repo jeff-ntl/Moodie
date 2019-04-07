@@ -50,7 +50,7 @@ class DiaryJSONStore : DiaryStore, AnkoLogger {
         val diariesList = findAll() as ArrayList<DiaryModel>
         var foundDiary: DiaryModel? = diariesList.find{ d -> d.id == diary.id}
         if(foundDiary != null){
-            foundDiary.title = diary.title;
+            //foundDiary.title = diary.title;
             foundDiary.description = diary.description
             foundDiary.image = diary.image
             foundDiary.mood = diary.mood
