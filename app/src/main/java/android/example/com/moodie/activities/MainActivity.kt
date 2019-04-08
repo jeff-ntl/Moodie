@@ -1,5 +1,6 @@
 package android.example.com.moodie.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.example.com.moodie.R
 import android.example.com.moodie.helpers.readImage
@@ -7,8 +8,17 @@ import android.example.com.moodie.helpers.readImageFromPath
 import android.example.com.moodie.helpers.showImagePicker
 import android.example.com.moodie.main.MainApp
 import android.example.com.moodie.models.DiaryModel
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.os.Environment.DIRECTORY_PICTURES
+import android.os.Environment.getExternalStoragePublicDirectory
+import android.provider.MediaStore
+import android.support.v4.content.FileProvider
 import android.support.v4.widget.ImageViewCompat
 import android.util.Log
 import android.view.Menu
@@ -23,9 +33,12 @@ import kotlinx.android.synthetic.main.card_diary.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
+import java.util.*
 
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -45,6 +58,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
     val current = LocalDateTime.now()
     val formatter = DateTimeFormatter.ofPattern("E, dd MMM yyyy")
     val formatted = current.format(formatter)
+
+    //to take photo
+    val REQUEST_IMAGE_CAPTURE = 2
+
+
 
 
 
@@ -109,6 +127,13 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
             info ("Select image")
             showImagePicker(this,IMAGE_REQUEST)
         }
+
+        //take photo button listener
+        takePhoto.setOnClickListener{
+            info("Take photo")
+            dispatchTakePictureIntent()
+        }
+
         info("Current Date is: $formatted")
 
         //handle Smiling Face clicked
@@ -178,6 +203,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
     //recover diary image if the IMAGE_REQUEST(from clicking add image button) is seen
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        info("your image data is: $data")
         when (requestCode) {
             //when an image is loaded
             IMAGE_REQUEST -> {
@@ -189,8 +215,35 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
                     chooseImage.setText(android.example.com.moodie.R.string.button_changeImage)
                 }
             }
+            //when a photo is taken
+            REQUEST_IMAGE_CAPTURE ->{
+                if(data!=null && resultCode == Activity.RESULT_OK){
+                    //diary.image = data.toString()
+
+                    val imageBitmap = data.extras.get("data") as Bitmap
+                    diaryImage.setImageBitmap(imageBitmap)
+
+                }
+
+            }
+        }
+
+    }
+
+    //to take photo
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
         }
     }
+
+
+
+
+
+
 
 
 
