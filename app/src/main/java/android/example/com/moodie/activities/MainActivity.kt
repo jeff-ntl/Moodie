@@ -2,38 +2,28 @@ package android.example.com.moodie.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.example.com.moodie.R
 import android.example.com.moodie.helpers.readImage
 import android.example.com.moodie.helpers.readImageFromPath
 import android.example.com.moodie.helpers.showImagePicker
 import android.example.com.moodie.main.MainApp
 import android.example.com.moodie.models.DiaryModel
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.os.Environment.DIRECTORY_PICTURES
 import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
-import android.support.v4.widget.ImageViewCompat
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.card_diary.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.time.LocalDateTime
@@ -60,7 +50,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
     val formatted = current.format(formatter)
 
     //to take photo
-    val REQUEST_IMAGE_CAPTURE = 2
+    //val REQUEST_IMAGE_CAPTURE = 2
 
 
 
@@ -216,12 +206,13 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
                 }
             }
             //when a photo is taken
-            REQUEST_IMAGE_CAPTURE ->{
+            REQUEST_TAKE_PHOTO ->{
                 if(data!=null && resultCode == Activity.RESULT_OK){
-                    //diary.image = data.toString()
+                    //diary.image = data.data.toString()
 
-                    val imageBitmap = data.extras.get("data") as Bitmap
-                    diaryImage.setImageBitmap(imageBitmap)
+                    diaryImage.setImageBitmap(readImageFromPath(this, diary.image))
+                  // val imageBitmap = data.extras.get("data") as Bitmap
+                   // diaryImage.setImageBitmap(imageBitmap)
 
                 }
 
@@ -229,18 +220,62 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
         }
 
     }
-
+/*
     //to take photo
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                              startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
         }
     }
+*/
 
+lateinit var currentPhotoPath: String
 
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
+    }
 
+    val REQUEST_TAKE_PHOTO = 2
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            // Ensure that there's a camera activity to handle the intent
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        this,
+                        "android.example.com.moodie.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    diary.image = photoURI.toString()
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                }
+            }
+        }
+    }
 
 
 

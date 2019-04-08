@@ -1,21 +1,18 @@
 package android.example.com.moodie.activities
 
 import android.content.Intent
-import android.example.com.moodie.R
 import android.example.com.moodie.main.MainApp
 import android.example.com.moodie.models.DiaryModel
-import android.icu.util.Calendar
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.*
-import android.widget.Button
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_diary_list.*
-import org.jetbrains.anko.*
-import java.util.*
-import android.app.AlarmManager
-import android.app.Notification
-import android.support.v4.app.ActivityCompat.startActivityForResult
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivityForResult
 
 
 class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {

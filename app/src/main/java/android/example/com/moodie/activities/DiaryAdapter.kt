@@ -1,7 +1,6 @@
 package android.example.com.moodie.activities
 
 import android.example.com.moodie.R
-import android.example.com.moodie.helpers.readImageFromPath
 import android.example.com.moodie.models.DiaryModel
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -19,7 +18,7 @@ interface DiaryListener {
 class DiaryAdapter constructor(private var diaries: List<DiaryModel>,  private val listener: DiaryListener) : RecyclerView.Adapter<DiaryAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        return MainHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_diary, parent, false))
+        return MainHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_diary, parent, false))
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
