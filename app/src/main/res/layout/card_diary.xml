@@ -17,7 +17,7 @@
                 android:layout_height="64dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:contentDescription="Your Mood"/>
+                android:contentDescription="@string/moodDesc"/>
 
         <TextView
                 android:id="@+id/diaryTitle"

@@ -4,15 +4,19 @@ import android.content.Intent
 import android.example.com.moodie.R
 import android.example.com.moodie.main.MainApp
 import android.example.com.moodie.models.DiaryModel
+import android.icu.util.Calendar
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import android.widget.Button
 import kotlinx.android.synthetic.main.activity_diary_list.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.*
+import java.util.*
+import android.app.AlarmManager
+import android.app.Notification
+import android.support.v4.app.ActivityCompat.startActivityForResult
+
 
 class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
 
@@ -20,7 +24,7 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_diary_list)
+        setContentView(android.example.com.moodie.R.layout.activity_diary_list)
         app = application as MainApp
 
 
@@ -37,11 +41,13 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
         //??????????
         toolbarMain.title = title
         setSupportActionBar(toolbarMain)
+
+        //notification
     }
 
     //to load menu resource
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(android.example.com.moodie.R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -49,7 +55,8 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             //if the + icon is clicked, call MainActivity
-            R.id.item_add -> startActivityForResult<MainActivity>(0)
+            android.example.com.moodie.R.id.item_add -> startActivityForResult<MainActivity>(0)
+            android.example.com.moodie.R.id.item_pie -> startActivityForResult<PieActivity>(1)
         }
         return super.onOptionsItemSelected(item)
     }

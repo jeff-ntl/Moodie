@@ -10,11 +10,14 @@ import android.example.com.moodie.models.DiaryModel
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.widget.ImageViewCompat
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_diary.view.*
 import org.jetbrains.anko.AnkoLogger
@@ -79,7 +82,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
                 "Sad" -> sadFace.alpha = 1.0f
                 "Angry" -> angryFace.alpha = 1.0f
             }
-
         }
 
         //add button listener
@@ -189,6 +191,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
             }
         }
     }
+
+
 
 
 }

@@ -17,4 +17,5 @@
     <string name="diaryImageDesc">diary image</string>
     <string name="textview_yourMood">Your Mood:</string>
     <string name="menu_deleteDiary">Delete</string>
+    <string name="moodDesc">Your Mood</string>
 </resources>

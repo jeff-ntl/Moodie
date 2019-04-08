@@ -31,6 +31,8 @@ class DiaryAdapter constructor(private var diaries: List<DiaryModel>,  private v
 
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+
+
         //data displayed in each card
         fun bind(diary: DiaryModel, listener: DiaryListener) {
             itemView.diaryTitle.text = diary.title
