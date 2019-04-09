@@ -1,6 +1,6 @@
 # Moodie
 
- A diary app (student project) allows you to not only perform basic CRUD function. It also displays your moods (happy, neutral, sad, angry) in a piechart. Other than that, user will also received a notification at 10pm (GMT +8) everyday as a reminder to write diary.
+ A diary app (student project) allows you to not only perform basic CRUD function. It also displays your moods (happy, neutral, sad, angry) in a piechart. Other than that, user will also received a notification at 10pm (GMT +8) everyday as a reminder to write diary. Users can also take photo and add it as part of their diary.
 
 
 ## Authors
