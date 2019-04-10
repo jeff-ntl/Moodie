@@ -23,13 +23,11 @@ fun generateRandomId(): Long {
     return Random().nextLong()
 }
 
-class DiaryJSONStore : DiaryStore, AnkoLogger {
+class DiaryJSONStore(val context: Context) : DiaryStore, AnkoLogger {
 
-    val context: Context
     var diaries = mutableListOf<DiaryModel>()
 
-    constructor (context: Context) {
-        this.context = context
+    init {
         if (exists(context, JSON_FILE)) {
             deserialize()
         }
@@ -48,9 +46,9 @@ class DiaryJSONStore : DiaryStore, AnkoLogger {
 
     override fun update(diary: DiaryModel) {
         val diariesList = findAll() as ArrayList<DiaryModel>
-        var foundDiary: DiaryModel? = diariesList.find{ d -> d.id == diary.id}
-        if(foundDiary != null){
-            //foundDiary.title = diary.title;
+        val foundDiary: DiaryModel? = diariesList.find { d -> d.id == diary.id }
+        if (foundDiary != null) {
+            foundDiary.title = diary.title
             foundDiary.description = diary.description
             foundDiary.image = diary.image
             foundDiary.mood = diary.mood
@@ -58,7 +56,7 @@ class DiaryJSONStore : DiaryStore, AnkoLogger {
         serialize()
     }
 
-    override fun delete(diary:DiaryModel){
+    override fun delete(diary: DiaryModel) {
         diaries.remove(diary)
         serialize()
     }

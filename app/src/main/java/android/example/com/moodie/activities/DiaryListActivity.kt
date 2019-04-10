@@ -1,3 +1,13 @@
+/*
+* Reference:
+*   Custom image on toolbar
+*       Basic Usage:
+*           https://android--code.blogspot.com/2018/02/android-kotlin-toolbar-example.html
+*       Free SVG icon (looks perfect on toolbar):
+*           https://material.io/tools/icons/?icon=alarm&style=baseline
+*       Importing image into drawable folder:
+*           https://stackoverflow.com/questions/29047902/how-to-add-an-image-to-the-drawable-folder-in-android-studio
+* */
 package android.example.com.moodie.activities
 
 import android.content.Intent
@@ -24,22 +34,15 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
         setContentView(android.example.com.moodie.R.layout.activity_diary_list)
         app = application as MainApp
 
-
         //card view
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        //?what data (in arraylist) to be used
-        //recyclerView.adapter = DiaryAdapter(app.diaries)
-        //added this due to changed in DiaryAdapter (card click listener)
-        //recyclerView.adapter = DiaryAdapter(app.diaries.findAll(),this)
+
         loadDiaries()
 
         //tool bar / menu
-        //??????????
         toolbarMain.title = title
         setSupportActionBar(toolbarMain)
-
-        //notification
     }
 
     //to load menu resource
@@ -67,17 +70,15 @@ class DiaryListActivity : AppCompatActivity(), DiaryListener, AnkoLogger {
 
     //refresh diary on the view (card)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //recyclerView is a widget in activity_diary_list.xml
-        //recyclerView.adapter?.notifyDataSetChanged()
         loadDiaries()
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun loadDiaries(){
+    private fun loadDiaries() {
         showDiaries(app.diaries.findAll())
     }
 
-    fun showDiaries (diaries:List<DiaryModel>){
+    fun showDiaries(diaries: List<DiaryModel>) {
         recyclerView.adapter = DiaryAdapter(diaries, this)
         recyclerView.adapter?.notifyDataSetChanged()
     }

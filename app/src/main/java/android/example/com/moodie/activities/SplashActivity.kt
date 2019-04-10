@@ -18,12 +18,12 @@ class SplashActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_splash)
 
-        //4 seconds splash time
+        //1.5 seconds splash time
         Handler().postDelayed({
             //start main activity
-            startActivity(Intent(this@SplashActivity,DiaryListActivity::class.java))
+            startActivity(Intent(this@SplashActivity, DiaryListActivity::class.java))
             //finish this activity
             finish()
-        },3000)
+        }, 1500)
     }
 }

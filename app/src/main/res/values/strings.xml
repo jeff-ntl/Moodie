@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Moodie</string>
-    <string name="hint_diaryTitle">Enter Diary Title</string>
     <string name="button_addDiary">Add Diary</string>
     <string name="hint_diaryDescription">Description</string>
     <string name="menu_addDiary">Add</string>
@@ -21,4 +20,6 @@
     <string name="button_takephoto">Take Photo</string>
     <string name="welcomeDesc">Welcome Image</string>
     <string name="welcomeText">Welcome to Moodie!</string>
+    <string name="hint_diaryTitle">If this was blank, today\'s date will be the title.</string>
+    <string name="menu_pie">Pie</string>
 </resources>

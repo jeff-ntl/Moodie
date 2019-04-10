@@ -3,12 +3,11 @@
           package="android.example.com.moodie">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-                     android:maxSdkVersion="18" />
-
+                     android:maxSdkVersion="18"/>
 
 
     <uses-feature android:name="android.hardware.camera"
-                  android:required="true" />
+                  android:required="true"/>
 
     <application
             android:name=".main.MainApp"
@@ -31,7 +30,7 @@
         </provider>
 
         <activity android:name=".activities.SplashActivity"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

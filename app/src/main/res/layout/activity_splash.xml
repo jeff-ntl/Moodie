@@ -20,6 +20,6 @@
               android:textColor="@color/colorPrimary"
               android:textSize="30sp"
               android:textStyle="bold"
-              />
+    />
 
 </LinearLayout>

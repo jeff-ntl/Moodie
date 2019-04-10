@@ -1,3 +1,17 @@
+/*
+* Reference:
+*   MPAndroidChart
+*       tutorial video for basic usage:
+*           https://www.youtube.com/watch?v=MiVx3AQD_PI
+*       original source (on GitHub):
+*           https://github.com/PhilJay/MPAndroidChart
+*       idea of adding colors to the pie chart:
+*           https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/main/java/com/xxmassdeveloper/mpchartexample/PieChartActivity.java
+*       idea of adding custom colors & what colors are included in the template provided
+*           https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartLib/src/main/java/com/github/mikephil/charting/utils/ColorTemplate.java
+*       more detailed use of pie chart:
+*           https://www.studytutorial.in/android-pie-chart-using-mpandroid-library-tutorial
+* */
 package android.example.com.moodie.activities
 
 import android.example.com.moodie.R
@@ -42,8 +56,8 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
 
         //loop through the arraylist and count mood
         val diaryArrayList = app.diaries.findAll()
-        for(item in diaryArrayList){
-            when(item.mood){
+        for (item in diaryArrayList) {
+            when (item.mood) {
                 "Smiling" -> smilingCounter++
                 "Neutral" -> neutralCounter++
                 "Sad" -> sadCounter++
@@ -56,19 +70,14 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
         //refer to piechart from your layout
         pieChart = this.findViewById(android.example.com.moodie.R.id.piechart)
 
-        //add y-values in percentage
-        //pieChart.setUsePercentValues(true)
-        //pieChart.description.isEnabled = false
         //provide margin
-        pieChart.setExtraOffsets(5F,10F,5F,5F)
+        pieChart.setExtraOffsets(5F, 10F, 5F, 5F)
 
         //when dragging the piechart
         pieChart.dragDecelerationFrictionCoef = 0.95f
 
         //the "hole" inside the circle, transparentCircleRadius give a 3d visual
         pieChart.isDrawHoleEnabled = false
-        //pieChart.setHoleColor(Color.WHITE)
-        //pieChart.transparentCircleRadius = 61F
 
         //store pie chart data into arraylist
         val yValues = ArrayList<PieEntry>()
@@ -79,7 +88,7 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
 
         //description of PieChart
         val descr = Description()
-        descr.text ="Your Mood in PieChart"
+        descr.text = "Your Mood in PieChart"
         descr.textColor = R.color.colorAccent
         descr.textSize = 36f
         pieChart.description = descr
@@ -88,7 +97,7 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
         pieChart.animateY(1000)
 
         //set PieChart data
-        val dataSet = PieDataSet(yValues,"")
+        val dataSet = PieDataSet(yValues, "")
 
         //the "boundary" between each data
         dataSet.sliceSpace = 3f
@@ -121,7 +130,7 @@ class PieActivity : AppCompatActivity(), AnkoLogger {
     //handle cancel button clicked
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            android.example.com.moodie.R.id.item_pie_cancel  -> {
+            android.example.com.moodie.R.id.item_pie_cancel -> {
                 finish()
             }
         }

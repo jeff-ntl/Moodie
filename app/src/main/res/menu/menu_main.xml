@@ -6,12 +6,12 @@
     <item
             android:id="@+id/item_pie"
             android:icon="@drawable/ic_menu_pie"
-            android:title="Pie"
-            app:showAsAction="always"
+            android:title="@string/menu_pie"
+            app:showAsAction="ifRoom"
     />
     <item
             android:id="@+id/item_add"
             android:title="@string/menu_addDiary"
             android:icon="@android:drawable/ic_menu_add"
-            app:showAsAction="always"/>
+            app:showAsAction="ifRoom"/>
 </menu>

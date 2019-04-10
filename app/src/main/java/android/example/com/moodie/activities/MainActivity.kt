@@ -1,19 +1,46 @@
+/*
+* Reference:
+*   Getting current date and time
+*       Basic usage:
+*           https://www.programiz.com/kotlin-programming/examples/current-date-time
+*       Customize date and time format:
+*           https://developer.android.com/reference/java/time/format/DateTimeFormatter
+*
+*   Check if edit text is null or empty:
+*           https://stackoverflow.com/questions/46035877/check-if-edittext-is-empty-kotlin-android
+*
+*   Mood List:
+*           https://www.youtube.com/watch?v=IuvUwQVTfGw
+*
+*   Position editText text to top left:
+*           https://stackoverflow.com/questions/5897181/is-there-anyway-to-make-an-edittext-start-typing-at-the-top-left-corner-of-the-e
+*
+*   Clickable image (the 4 moods)
+*        onClick handler:
+*           https://www.tutorialkart.com/kotlin-android/set-onclicklistener-for-imageview-in-kotlin-android/
+*        image opacity/ alpha:
+*           https://stackoverflow.com/questions/4931071/android-and-setting-alpha-for-image-view-alpha
+*
+*    Camera
+*        basic usage:
+*           https://developer.android.com/training/camera/photobasics#kotlin
+*        to hardcoding packaging path:
+*           https://github.com/jkwiecien/EasyImage/issues/103
+* */
 package android.example.com.moodie.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.example.com.moodie.R.string.*
 import android.example.com.moodie.helpers.readImage
 import android.example.com.moodie.helpers.readImageFromPath
 import android.example.com.moodie.helpers.showImagePicker
 import android.example.com.moodie.main.MainApp
 import android.example.com.moodie.models.DiaryModel
-import android.graphics.Bitmap
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Environment.DIRECTORY_PICTURES
-import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
@@ -32,7 +59,7 @@ import java.util.*
 
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class MainActivity : AppCompatActivity(), AnkoLogger{
+class MainActivity : AppCompatActivity(), AnkoLogger {
 
     //variables
     var diary = DiaryModel()
@@ -49,12 +76,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
     val formatter = DateTimeFormatter.ofPattern("E, dd MMM yyyy")
     val formatted = current.format(formatter)
 
-    //to take photo
-    //val REQUEST_IMAGE_CAPTURE = 2
-
-
-
-
+    //used for capturing photo
+    val REQUEST_TAKE_PHOTO = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +88,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
         app = application as MainApp
 
         //toolbar / menu
-        //???????
         toolbarAdd.title = title
         //?tell which toolbar supports the onCreateOptionsMenu
         setSupportActionBar(toolbarAdd)
@@ -74,17 +96,17 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
         if (intent.hasExtra("diary_edit")) {
             edit = true
             diary = intent.extras.getParcelable<DiaryModel>("diary_edit")
-            //diaryTitle.setText(diary.title)
+            diaryTitle.setText(diary.title)
             diaryDescription.setText(diary.description)
-            btnAdd.setText(android.example.com.moodie.R.string.button_saveDiary)
-            if(diary.image!=null){
-                chooseImage.setText(android.example.com.moodie.R.string.button_changeImage)
+            btnAdd.setText(button_saveDiary)
+            if (diary.image != "") {
+                chooseImage.setText(button_changeImage)
             }
             //read image added by user ( for editing image)
             diaryImage.setImageBitmap(readImageFromPath(this, diary.image))
 
             //set selected mood opacity to opaque when editing
-            when(diary.mood){
+            when (diary.mood) {
                 "Smiling" -> smilingFace.alpha = 1.0f
                 "Neutral" -> neutralFace.alpha = 1.0f
                 "Sad" -> sadFace.alpha = 1.0f
@@ -94,32 +116,35 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
 
         //add button listener
         btnAdd.setOnClickListener {
-            diary.title = formatted
+            if (diaryTitle.text.isNullOrEmpty()) {
+                diary.title = formatted
+            } else {
+                diary.title = diaryTitle.text.toString()
+            }
+            //diary.title = formatted
             diary.description = diaryDescription.text.toString()
             if (diary.description.isNotEmpty()) {
-                if(edit){
+                if (edit) {
                     app.diaries.update(diary.copy())
-                }else{
-                    //app.diaries.add(diary.copy())
+                } else {
                     app.diaries.create(diary.copy())
                 }
                 //tell the previous activity that the operation is successful (this activity is opened)
                 setResult(AppCompatActivity.RESULT_OK)
                 finish()
-             }
-            else {
-                toast (getString(android.example.com.moodie.R.string.toast_message))
+            } else {
+                toast(getString(toast_message))
             }
         }
 
         //add image button listener
         chooseImage.setOnClickListener {
-            info ("Select image")
-            showImagePicker(this,IMAGE_REQUEST)
+            info("Select image")
+            showImagePicker(this, IMAGE_REQUEST)
         }
 
         //take photo button listener
-        takePhoto.setOnClickListener{
+        takePhoto.setOnClickListener {
             info("Take photo")
             dispatchTakePictureIntent()
         }
@@ -127,46 +152,45 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
         info("Current Date is: $formatted")
 
         //handle Smiling Face clicked
-        smilingFace.setOnClickListener{
-            Toast.makeText(this,"You have clicked smiling face!", Toast.LENGTH_SHORT).show()
+        smilingFace.setOnClickListener {
+            Toast.makeText(this, "You have clicked smiling face!", Toast.LENGTH_SHORT).show()
             smilingFace.alpha = 1.0f
-            neutralFace.alpha= 0.5f
+            neutralFace.alpha = 0.5f
             sadFace.alpha = 0.5f
             angryFace.alpha = 0.5f
             diary.mood = "Smiling"
         }
 
         //handle Neutral Face clicked
-        neutralFace.setOnClickListener{
-            Toast.makeText(this,"You have clicked neutral face!", Toast.LENGTH_SHORT).show()
+        neutralFace.setOnClickListener {
+            Toast.makeText(this, "You have clicked neutral face!", Toast.LENGTH_SHORT).show()
             smilingFace.alpha = 0.5f
-            neutralFace.alpha= 1.0f
+            neutralFace.alpha = 1.0f
             sadFace.alpha = 0.5f
             angryFace.alpha = 0.5f
             diary.mood = "Neutral"
         }
 
         //handle Sad Face clicked
-        sadFace.setOnClickListener{
-            Toast.makeText(this,"You have clicked sad face!", Toast.LENGTH_SHORT).show()
+        sadFace.setOnClickListener {
+            Toast.makeText(this, "You have clicked sad face!", Toast.LENGTH_SHORT).show()
             smilingFace.alpha = 0.5f
-            neutralFace.alpha= 0.5f
+            neutralFace.alpha = 0.5f
             sadFace.alpha = 1.0f
             angryFace.alpha = 0.5f
             diary.mood = "Sad"
         }
 
         //handle Angry Face clicked
-        angryFace.setOnClickListener{
-            Toast.makeText(this,"You have clicked angry face!", Toast.LENGTH_SHORT).show()
+        angryFace.setOnClickListener {
+            Toast.makeText(this, "You have clicked angry face!", Toast.LENGTH_SHORT).show()
             smilingFace.alpha = 0.5f
-            neutralFace.alpha= 0.5f
+            neutralFace.alpha = 0.5f
             sadFace.alpha = 0.5f
             angryFace.alpha = 1.0f
             diary.mood = "Angry"
         }
     }
-
 
     //to load menu resource
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -201,37 +225,21 @@ class MainActivity : AppCompatActivity(), AnkoLogger{
                     //to recover image data from image picker
                     diary.image = data.data.toString()
                     //to display image(in MainActivty, when user picked the image)
-                    diaryImage.setImageBitmap(readImage(this,resultCode,data))
-                    chooseImage.setText(android.example.com.moodie.R.string.button_changeImage)
+                    diaryImage.setImageBitmap(readImage(this, resultCode, data))
+                    chooseImage.setText(button_changeImage)
                 }
             }
             //when a photo is taken
-            REQUEST_TAKE_PHOTO ->{
-                if(data!=null && resultCode == Activity.RESULT_OK){
-                    //diary.image = data.data.toString()
-
+            REQUEST_TAKE_PHOTO -> {
+                if (data != null && resultCode == Activity.RESULT_OK) {
                     diaryImage.setImageBitmap(readImageFromPath(this, diary.image))
-                  // val imageBitmap = data.extras.get("data") as Bitmap
-                   // diaryImage.setImageBitmap(imageBitmap)
-
                 }
-
             }
         }
 
     }
-/*
-    //to take photo
-    private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(packageManager)?.also {
-                              startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-            }
-        }
-    }
-*/
 
-lateinit var currentPhotoPath: String
+    lateinit var currentPhotoPath: String
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -248,8 +256,6 @@ lateinit var currentPhotoPath: String
         }
     }
 
-    val REQUEST_TAKE_PHOTO = 2
-
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -259,7 +265,7 @@ lateinit var currentPhotoPath: String
                     createImageFile()
                 } catch (ex: IOException) {
                     // Error occurred while creating the File
-
+                    info("Failed to take photo")
                     null
                 }
                 // Continue only if the File was successfully created
@@ -276,11 +282,4 @@ lateinit var currentPhotoPath: String
             }
         }
     }
-
-
-
-
-
-
-
 }

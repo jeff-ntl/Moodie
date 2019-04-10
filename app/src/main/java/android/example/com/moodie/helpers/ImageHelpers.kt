@@ -34,8 +34,8 @@ fun readImage(activity: Activity, resultCode: Int, data: Intent?): Bitmap? {
 }
 
 //read image from path: to read image set for editing
-fun readImageFromPath(context: Context, path : String) : Bitmap? {
-    var bitmap : Bitmap? = null
+fun readImageFromPath(context: Context, path: String): Bitmap? {
+    var bitmap: Bitmap? = null
     val uri = Uri.parse(path)
     if (uri != null) {
         try {
