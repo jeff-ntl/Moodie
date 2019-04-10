@@ -50,7 +50,7 @@
                         android:maxLength="20"
                         android:padding="8dp"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                 <android.support.design.widget.TextInputEditText
                         android:id="@+id/diaryDescription"
