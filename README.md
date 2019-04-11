@@ -12,7 +12,7 @@ The reason why I named it as Moodie is because of the main feature of the diary 
 * Duolingo - the custom notification of Duolingo gives me the inspiration to send a notification as a reminder to the users of Moodie.
 
 ## Achieving Goals
-* Moods Picker - ![moods](moods.png)
+* Moods Picker - <img src ="moods.png">
 
 ## Built with
 * Android Studio - the IDE used.
