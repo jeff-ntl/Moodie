@@ -1,7 +1,7 @@
 # Moodie 
 
 ## About
-Moodie is a diary app (student project) allows you to not only perform basic CRUD function. It also displays your moods (happy, neutral, sad, angry) in a piechart. Users can also take photo and add it as part of their diary. Other than that, user will also received a notification at 10pm (GMT +8) everyday as a reminder to write diary.
+Moodie is a diary app allows you to not only perform basic CRUD function. It also displays your moods (happy, neutral, sad, angry) in a piechart. Users can also take photo and add it as part of their diary. Other than that, user will also received a notification at 10pm (GMT +8) everyday as a reminder to write diary.
 
 
 ## Naming
@@ -11,7 +11,7 @@ The reason why I named it as Moodie is because of the main feature of the diary 
 ## Inspiration
 * [Daylio](https://daylio.webflow.io/) - The main inspiration of the apps. The features of mood picking of Moodie and displaying user's mood as a pie chart came from here. 
 
-* [Duolingo](https://www.duolingo.com/) - the custom notification of Duolingo gives me the inspiration to send a notification as a reminder to the users of Moodie.
+* [Duolingo](https://www.duolingo.com/) - The custom notification of Duolingo gives me the inspiration to send a notification as a reminder to the users of Moodie.
 
 
 ## Basic Functions
@@ -61,11 +61,18 @@ The reason why I named it as Moodie is because of the main feature of the diary 
 * Light Blue & White - I tend to use only this two colors with different shades. Again, this is because I wanted to retain the simplicity of the app. Furthermore, I think that the combination of blue and white gives a sense of comfortability. This is also used by many well-known applications such as [Twitter](https://twitter.com/?lang=en).
 
 
-## Authors
+## Things I should have done...
+* Use FireStore to carry out data persistence instead of json.
+* Allows the user to filter the diary they wrote according to the mood selected or the date of diary creation.
 
+
+## Conclusion
+Overall I think this is a good practice for app development. I really enjoy doing this project as app development is my main interest. but I wish I could have more time for this. The most frustrating part is that I'm not familiar enough with the Kotlin language before I started making this app and this caused me to spend lots of my time on understanding the resources I found. I personally think that this module is too heavy. We should spend a little bit more time on the basic stuffs such as the Kotlin syntax and XML. We also need some practical classes for MVC/MVP approaches, not just following the what's on the lecturers' notes.
+
+
+## Authors
 * Teek Leng Ng (BSc in Software System Development Year 2 in WIT).
 
 
 ## Acknowledgments
-
-* This app is built for academic purpose only. It is **NOT build for commercial purpose.** 
+* This app is built for academic purpose only. It is **NOT built for commercial purpose.** 
