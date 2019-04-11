@@ -26,6 +26,11 @@
 *           https://developer.android.com/training/camera/photobasics#kotlin
 *        to hardcoding packaging path:
 *           https://github.com/jkwiecien/EasyImage/issues/103
+*
+*     Notification
+*        set up:
+*           https://medium.com/@lobothijau/create-android-push-notification-easily-with-kotlin-and-firebase-cloud-messaging-part-1-9062f2a57555
+*           https://www.youtube.com/watch?v=2EHDSvx_OYg
 * */
 package android.example.com.moodie.activities
 
